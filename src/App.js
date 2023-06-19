@@ -5,22 +5,54 @@ import TaskForm from "./TaskForm";
 import TaskHookForm from "./TaskHookForm";
 import PeopleForm from "./PeopleForm";
 import { initialTasks, initialTeam } from "./data";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [tasks, setTasks] = useState(initialTasks);
   const [team, setTeam] = useState(initialTeam);
 
   function handleTaskSubmit(yeniTask) {
-    setTasks([yeniTask, ...tasks])
+    setTasks([yeniTask, ...tasks]);
+
+    toast.success("Not Başarıyla Eklendi.", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   }
 
   function handlePeopleSubmit(yeniKisi) {
-    setTeam([...team, yeniKisi])
+    setTeam([...team, yeniKisi]);
   }
 
   function handleComplete(id) {
-    console.log("tamamlama fonksiyonunu buraya yazın")
+    console.log("tamamlama fonksiyonunu buraya yazın");
+
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === id) {
+          return { ...task, status: "yapıldı" };
+        }
+        return task;
+      })
+    );
+
+    toast.success("Not Başarıyla Eklendi.", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   }
 
   return (
@@ -28,7 +60,7 @@ function App() {
       <div className="formColumn">
         <div className="form-container">
           <h2>Yeni Task</h2>
-          {/* <TaskForm kisiler={team} submitFn={handleTaskSubmit} /> */}
+          {/*<TaskForm kisiler={team} submitFn={handleTaskSubmit} />*/}
           <TaskHookForm kisiler={team} submitFn={handleTaskSubmit} />
         </div>
 
@@ -59,7 +91,7 @@ function App() {
           </div>
         </div>
       </div>
-
+      <ToastContainer />
     </div>
   );
 }
